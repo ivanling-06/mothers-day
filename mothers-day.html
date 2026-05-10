@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Mother's Day 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Caveat:wght@400;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --peach:#f9ede3;
+  --peach2:#f4d9c8;
+  --rose:#e8a4a4;
+  --rose2:#d47a7a;
+  --sage:#b8c9b0;
+  --sage2:#8aaa80;
+  --lavender:#d4c8e0;
+  --cream:#fdf8f4;
+  --warm:#7a4a3a;
+  --blush:#f7e0d8;
+  --honey:#e8c97a;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  font-family:'Lato',sans-serif;
+  color:var(--warm);
+  overflow-x:hidden;
+}
+
+/* soft paper grain overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ── LOADER ── */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--cream);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+}
+.l-flower{font-size:40px;animation:spin 2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.l-text{
+  font-family:'Caveat',cursive;
+  font-size:20px;color:var(--rose2);
+  animation:lbob .9s ease-in-out infinite alternate;
+}
+@keyframes lbob{from{opacity:.5}to{opacity:1}}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:60px 24px 80px;
+  background:linear-gradient(180deg,#fdf1eb 0%,#fdf8f4 100%);
+  overflow:hidden;
+}
+
+/* animated soft bg blobs */
+.blob{
+  position:absolute;border-radius:50%;
+  pointer-events:none;filter:blur(60px);opacity:.35;
+  animation:blobdrift ease-in-out infinite alternate;
+}
+.blob1{width:400px;height:400px;background:#f4c9c9;top:-100px;left:-120px;animation-duration:8s}
+.blob2{width:300px;height:300px;background:#d4e8c8;bottom:-60px;right:-80px;animation-duration:10s;animation-delay:-3s}
+.blob3{width:200px;height:200px;background:#e8c97a;top:40%;left:60%;animation-duration:7s;animation-delay:-1s}
+@keyframes blobdrift{from{transform:translate(0,0) scale(1)}to{transform:translate(20px,15px) scale(1.05)}}
+
+/* illustrated flowers around hero */
+.deco-flower{
+  position:absolute;pointer-events:none;
+  animation:floatSway ease-in-out infinite alternate;
+}
+@keyframes floatSway{from{transform:rotate(var(--r,0deg)) translateY(0)}to{transform:rotate(var(--r,0deg)) translateY(-10px)}}
+
+.hero-tag{
+  font-family:'Caveat',cursive;
+  font-size:clamp(15px,3vw,18px);
+  color:var(--rose2);
+  letter-spacing:3px;
+  margin-bottom:12px;
+  opacity:0;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,11vw,88px);
+  color:var(--warm);
+  line-height:1.05;
+  font-style:italic;
+  opacity:0;
+  position:relative;z-index:2;
+}
+.hero-title span{
+  display:block;
+  font-family:'Caveat',cursive;
+  font-size:clamp(32px,8vw,64px);
+  color:var(--rose2);
+  font-style:normal;
+}
+.hero-divider{
+  width:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--rose),var(--honey),var(--rose),transparent);
+  border-radius:99px;
+  margin:28px auto;
+}
+.hero-sub{
+  font-family:'Caveat',cursive;
+  font-size:clamp(18px,4vw,24px);
+  color:var(--warm);
+  opacity:.7;
+  max-width:400px;
+  line-height:1.6;
+  opacity:0;
+}
+.scroll-hint{
+  margin-top:48px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;
+}
+.scroll-hint p{
+  font-family:'Caveat',cursive;
+  font-size:16px;color:var(--rose);
+  animation:shint 1.8s ease-in-out infinite;
+}
+@keyframes shint{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.dots-down{display:flex;flex-direction:column;align-items:center;gap:4px}
+.dots-down span{
+  display:block;width:4px;height:4px;
+  border-radius:50%;background:var(--rose);
+  animation:dotFade 1.8s ease-in-out infinite;
+}
+.dots-down span:nth-child(2){animation-delay:.2s}
+.dots-down span:nth-child(3){animation-delay:.4s}
+@keyframes dotFade{0%,100%{opacity:.2}50%{opacity:1}}
+
+/* ── SECTION BASE ── */
+section{position:relative;z-index:1}
+.section-wrap{max-width:680px;margin:0 auto;padding:80px 24px}
+
+/* ── LETTER SECTION ── */
+#letter{background:var(--cream)}
+.letter-card{
+  background:#fff9f5;
+  border:1.5px solid var(--peach2);
+  border-radius:24px;
+  padding:clamp(28px,6vw,52px) clamp(24px,6vw,48px);
+  position:relative;
+  box-shadow:0 4px 40px rgba(180,100,80,.06),0 1px 0 rgba(255,255,255,.8) inset;
+}
+/* corner washi tape deco */
+.letter-card::before,.letter-card::after{
+  content:'';position:absolute;
+  width:32px;height:10px;border-radius:3px;opacity:.6;
+}
+.letter-card::before{top:-5px;left:30px;background:var(--honey);transform:rotate(-3deg)}
+.letter-card::after{top:-5px;right:40px;background:var(--rose);transform:rotate(2deg)}
+
+.letter-greeting{
+  font-family:'Caveat',cursive;
+  font-size:clamp(28px,7vw,44px);
+  color:var(--rose2);
+  margin-bottom:20px;
+  line-height:1.2;
+}
+.letter-text{
+  font-family:'Lato',sans-serif;
+  font-weight:300;
+  font-size:clamp(16px,3.5vw,19px);
+  line-height:2;
+  color:var(--warm);
+}
+.letter-text em{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  color:var(--rose2);
+}
+.letter-sig{
+  font-family:'Caveat',cursive;
+  font-size:clamp(22px,5vw,32px);
+  color:var(--rose2);
+  margin-top:28px;
+  text-align:right;
+}
+.little-hearts{
+  display:flex;gap:6px;margin-top:8px;justify-content:flex-end;
+}
+.little-hearts span{
+  font-size:14px;
+  animation:hpop ease-in-out infinite alternate;
+}
+.little-hearts span:nth-child(2){animation-delay:.3s}
+.little-hearts span:nth-child(3){animation-delay:.6s}
+@keyframes hpop{from{transform:scale(1)}to{transform:scale(1.3)}}
+
+/* ── REASONS SECTION ── */
+#reasons{background:linear-gradient(180deg,var(--cream),#fdf0eb)}
+.section-eyebrow{
+  font-family:'Caveat',cursive;
+  font-size:clamp(14px,3vw,17px);
+  color:var(--sage2);
+  letter-spacing:3px;text-align:center;
+  margin-bottom:8px;opacity:0;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(30px,7vw,52px);
+  color:var(--warm);
+  text-align:center;
+  margin-bottom:48px;opacity:0;
+}
+.reasons-grid{
+  display:grid;gap:16px;
+}
+.reason-card{
+  background:#fff9f5;
+  border:1px solid var(--peach2);
+  border-radius:20px;
+  padding:24px 28px;
+  display:flex;align-items:flex-start;gap:16px;
+  opacity:0;transform:translateY(20px);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.reason-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(180,100,80,.1)}
+.reason-icon{
+  font-size:28px;flex-shrink:0;
+  animation:iconWobble 3s ease-in-out infinite;
+}
+@keyframes iconWobble{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+.reason-icon:nth-child(1){animation-delay:0s}
+.reason-num{
+  font-family:'Caveat',cursive;
+  font-size:11px;letter-spacing:3px;
+  color:var(--rose);display:block;margin-bottom:4px;
+  text-transform:uppercase;
+}
+.reason-title{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(17px,3.8vw,20px);
+  color:var(--warm);margin-bottom:6px;
+}
+.reason-body{
+  font-size:clamp(14px,3vw,15px);
+  color:rgba(122,74,58,.7);
+  line-height:1.75;
+}
+
+/* ── PHOTO GALLERY ── */
+#gallery{background:#fdf0eb}
+.gallery-intro{
+  text-align:center;margin-bottom:40px;
+}
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.photo-frame{
+  position:relative;overflow:hidden;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--blush),var(--peach2));
+  opacity:0;transform:scale(.96);
+  cursor:pointer;
+  transition:transform .35s ease;
+}
+.photo-frame:hover{transform:scale(1.02)}
+.photo-frame:first-child{
+  grid-column:1/3;
+  border-radius:22px;
+}
+.photo-inner{
+  aspect-ratio:1;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:10px;
+  padding:20px;
+}
+.photo-frame:first-child .photo-inner{aspect-ratio:16/9}
+.photo-inner img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+.photo-placeholder{
+  font-size:32px;opacity:.4;
+}
+.photo-placeholder-text{
+  font-family:'Caveat',cursive;
+  font-size:13px;color:var(--warm);opacity:.5;
+  text-align:center;line-height:1.4;
+}
+.photo-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(0deg,rgba(122,74,58,.55),transparent);
+  padding:20px 14px 12px;
+  font-family:'Caveat',cursive;
+  font-size:15px;color:#fff;
+  opacity:0;transition:opacity .3s;
+}
+.photo-frame:hover .photo-label,.photo-frame:active .photo-label{opacity:1}
+
+/* ── MESSAGE SECTION ── */
+#message{background:linear-gradient(180deg,#fdf0eb,var(--cream))}
+.message-card{
+  background:#fff9f5;
+  border:1.5px dashed var(--rose);
+  border-radius:24px;
+  padding:clamp(28px,6vw,48px);
+  position:relative;
+  text-align:center;
+}
+.message-stamp{
+  position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  background:var(--rose2);color:#fff;
+  font-family:'Caveat',cursive;font-size:13px;
+  padding:6px 20px;border-radius:99px;
+  white-space:nowrap;letter-spacing:1px;
+}
+.message-title{
+  font-family:'Caveat',cursive;
+  font-size:clamp(26px,6vw,38px);
+  color:var(--rose2);margin-bottom:24px;margin-top:16px;
+}
+.message-body{
+  font-family:'Lato',sans-serif;font-weight:300;
+  font-size:clamp(16px,3.5vw,19px);
+  line-height:2;color:var(--warm);
+  white-space:pre-wrap;text-align:left;
+}
+.message-hint{
+  font-family:'Caveat',cursive;font-size:13px;
+  color:var(--rose);opacity:.6;
+  margin-top:16px;letter-spacing:1px;
+}
+
+/* ── ENDING ── */
+#ending{
+  background:linear-gradient(180deg,var(--cream) 0%,#fdeee5 50%,var(--cream) 100%);
+  min-height:80vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:80px 24px;
+}
+.ending-wrap{max-width:500px}
+.ending-flowers{
+  font-size:clamp(40px,12vw,72px);
+  display:block;margin-bottom:24px;
+  animation:eFloat 3s ease-in-out infinite;
+}
+@keyframes eFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.ending-main{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(32px,8vw,60px);
+  color:var(--warm);
+  line-height:1.2;margin-bottom:20px;
+  opacity:0;
+}
+.ending-main span{display:block;color:var(--rose2)}
+.ending-sub{
+  font-family:'Lato',sans-serif;font-weight:300;
+  font-size:clamp(15px,3.5vw,18px);
+  color:rgba(122,74,58,.65);
+  line-height:1.8;margin-bottom:32px;opacity:0;
+}
+.ending-love{
+  font-family:'Caveat',cursive;
+  font-size:clamp(24px,5.5vw,36px);
+  color:var(--rose2);opacity:0;
+}
+.ending-hearts{
+  font-size:24px;letter-spacing:10px;
+  display:block;margin-top:16px;opacity:0;
+  animation:ehb 1.5s ease-in-out infinite alternate;
+}
+@keyframes ehb{from{transform:scale(1)}to{transform:scale(1.1)}}
+
+/* ── FLOATING PETALS ── */
+.petal{
+  position:fixed;pointer-events:none;z-index:50;
+  font-size:18px;opacity:0;
+}
+
+/* ── DIVIDERS ── */
+.floral-divider{
+  text-align:center;padding:8px 0;
+  font-size:20px;letter-spacing:12px;opacity:.5;
+}
+
+/* ── BILINGUAL LETTER ── */
+.letter-greeting-zh{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,5vw,30px);
+  color:var(--warm);opacity:.8;
+  margin-top:4px;
+}
+.bb{
+  margin-bottom:22px;
+  padding-bottom:22px;
+  border-bottom:1px solid var(--peach2);
+}
+.bb:last-child{border-bottom:none}
+.bl-en{
+  font-size:clamp(15px,3.2vw,18px);
+  line-height:1.8;color:var(--warm);
+  margin-bottom:7px;
+}
+.bl-zh{
+  font-size:clamp(14px,3vw,17px);
+  line-height:1.9;
+  color:rgba(122,74,58,.6);
+  font-family:'Lato',sans-serif;
+}
+.bl-love{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(18px,4vw,22px);
+  color:var(--rose2) !important;
+}
+
+/* ── SONG SECTION ── */
+#song{background:linear-gradient(180deg,#fdf0eb,var(--cream))}
+.song-card{
+  background:#fff9f5;
+  border:1.5px solid var(--peach2);
+  border-radius:24px;
+  padding:clamp(24px,5vw,40px);
+  box-shadow:0 4px 40px rgba(180,100,80,.06);
+}
+.song-top{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  gap:12px;margin-bottom:24px;text-align:center;
+}
+.song-note{font-size:24px;animation:songBob .9s ease-in-out infinite alternate}
+@keyframes songBob{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-5px) rotate(8deg)}}
+.song-label{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(18px,4vw,24px);
+  color:var(--warm);
+}
+.song-sub{
+  font-family:'Caveat',cursive;
+  font-size:clamp(14px,3vw,17px);
+  color:var(--rose);margin-top:4px;
+}
+.song-embed{
+  border-radius:16px;
+  overflow:hidden;
+  border:2px solid var(--peach2);
+  margin-bottom:16px;
+}
+.song-footer{
+  font-family:'Caveat',cursive;
+  font-size:clamp(16px,3.5vw,20px);
+  color:var(--rose2);
+  text-align:center;
+}
+
+/* ── SCROLL FADE CLASS ── */
+.fade-up{opacity:0;transform:translateY(24px)}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="l-flower">🌸</div>
+  <div class="l-text">preparing something for mom ♡</div>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <!-- soft blobs -->
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <!-- illustrated SVG florals -->
+  <svg style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <!-- top left bouquet -->
+    <g transform="translate(30,30)" opacity=".55">
+      <ellipse cx="40" cy="80" rx="12" ry="30" fill="#b8c9b0" transform="rotate(-20 40 80)"/>
+      <ellipse cx="55" cy="75" rx="10" ry="25" fill="#8aaa80" transform="rotate(10 55 75)"/>
+      <circle cx="35" cy="48" r="14" fill="#e8a4a4"/>
+      <circle cx="52" cy="42" r="12" fill="#f4c9a8"/>
+      <circle cx="43" cy="32" r="10" fill="#e8a4a4"/>
+      <circle cx="35" cy="48" r="6" fill="#d47a7a"/>
+      <circle cx="52" cy="42" r="5" fill="#c97a50"/>
+      <circle cx="43" cy="32" r="4" fill="#d47a7a"/>
+    </g>
+    <!-- top right -->
+    <g transform="translate(calc(100% - 100px), 20)" opacity=".5">
+      <ellipse cx="50" cy="80" rx="10" ry="28" fill="#d4c8e0" transform="rotate(15 50 80)"/>
+      <circle cx="40" cy="52" r="13" fill="#e8c97a"/>
+      <circle cx="58" cy="45" r="11" fill="#e8a4a4"/>
+      <circle cx="40" cy="52" r="5" fill="#ba9a2a"/>
+      <circle cx="58" cy="45" r="5" fill="#d47a7a"/>
+    </g>
+    <!-- bottom left small -->
+    <g transform="translate(10, calc(100% - 80px))" opacity=".4">
+      <ellipse cx="30" cy="30" rx="8" ry="22" fill="#b8c9b0" transform="rotate(-10 30 30)"/>
+      <circle cx="28" cy="10" r="10" fill="#f4d9c8"/>
+      <circle cx="28" cy="10" r="4" fill="#d47a7a"/>
+    </g>
+    <!-- bottom right -->
+    <g transform="translate(calc(100% - 80px), calc(100% - 100px))" opacity=".45">
+      <ellipse cx="30" cy="50" rx="9" ry="26" fill="#8aaa80" transform="rotate(12 30 50)"/>
+      <circle cx="25" cy="24" r="12" fill="#e8a4a4"/>
+      <circle cx="38" cy="18" r="9" fill="#e8c97a"/>
+      <circle cx="25" cy="24" r="5" fill="#d47a7a"/>
+      <circle cx="38" cy="18" r="4" fill="#ba9a2a"/>
+    </g>
+    <!-- small scattered dots / buds -->
+    <circle cx="20%" cy="70%" r="5" fill="#e8a4a4" opacity=".3"/>
+    <circle cx="78%" cy="72%" r="4" fill="#e8c97a" opacity=".35"/>
+    <circle cx="88%" cy="30%" r="6" fill="#d4c8e0" opacity=".4"/>
+    <circle cx="12%" cy="38%" r="5" fill="#b8c9b0" opacity=".35"/>
+  </svg>
+
+  <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center">
+    <div class="hero-tag">✿ for the best mom ever ✿</div>
+    <h1 class="hero-title">
+      Happy<br>
+      <span>Mother's Day</span>
+    </h1>
+    <div class="hero-divider" id="hdiv"></div>
+    <p class="hero-sub">You are my sunshine, my safe place, and my favourite person in the whole world. 🌷</p>
+    <div class="scroll-hint">
+      <p>scroll to read your letter</p>
+      <div class="dots-down"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ LETTER ══════════════ -->
+<section id="letter">
+  <div class="section-wrap">
+    <div class="floral-divider">🌸 ✿ 🌼 ✿ 🌸</div>
+    <div style="height:32px"></div>
+    <div class="letter-card fade-up" id="letterCard">
+      <div class="letter-greeting">Hello Mom! ❤️<br><span class="letter-greeting-zh">母亲节快乐！</span></div>
+      <div class="letter-text">
+        <div class="bb"><div class="bl-en">I know I do not always say this properly, but genuinely, thank you for everything you do for me.</div><div class="bl-zh">我知道我平时不太会表达，但我真的很感谢您为我做的一切。</div></div>
+        <div class="bb"><div class="bl-en">Thank you for always being there for me, supporting me, caring for me, and loving me even during the difficult moments.</div><div class="bl-zh">谢谢您一直陪着我、支持我、照顾我，就算我有时候很固执、很烦，您也从来没有放弃过我。</div></div>
+        <div class="bb"><div class="bl-en">Sometimes I take things for granted, but I truly appreciate every little thing you do.</div><div class="bl-zh">有时候我会把很多事情当成理所当然，但其实我一直都记得，也很感激。</div></div>
+        <div class="bb"><div class="bl-en">Your presence makes life feel warmer, safer, and happier.</div><div class="bl-zh">因为有您在，这个家才会这么温暖。</div></div>
+        <div class="bb"><div class="bl-en">I hope one day I can make you proud and repay everything you have done for me.</div><div class="bl-zh">希望有一天，我也能成为让您骄傲的人。</div></div>
+        <div class="bb"><div class="bl-en">Thank you for being my mom ❤️</div><div class="bl-zh">谢谢您成为我的妈妈。</div></div>
+        <div class="bb" style="margin-bottom:0"><div class="bl-en bl-love">I love you forever.</div><div class="bl-zh bl-love">我永远爱您 ❤️</div></div>
+      </div>
+      <div class="letter-sig">With all my love,<br><span style="font-size:clamp(26px,6vw,38px)">Ivan 🌸</span></div>
+      <div class="little-hearts"><span>🌸</span><span>💕</span><span>🌸</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ REASONS ══════════════ -->
+<section id="reasons">
+  <div class="section-wrap">
+    <div class="floral-divider">🌼 ✿ 🌸</div>
+    <div style="height:40px"></div>
+    <p class="section-eyebrow" id="re">reasons i love you</p>
+    <h2 class="section-title" id="rt">A few of a million things ✨</h2>
+
+    <div class="reasons-grid">
+      <div class="reason-card" id="rc1">
+        <div class="reason-icon" style="animation-delay:0s">🌱</div>
+        <div>
+          <span class="reason-num">01</span>
+          <div class="reason-title">You taught me how to be better</div>
+          <div class="reason-body">Just by the way you live — with grace, kindness, and patience — you showed me what kind of person I want to be.</div>
+        </div>
+      </div>
+      <div class="reason-card" id="rc2">
+        <div class="reason-icon" style="animation-delay:.4s">💛</div>
+        <div>
+          <span class="reason-num">02</span>
+          <div class="reason-title">You worry like only a mom can</div>
+          <div class="reason-body">You carry a kind of love for me that I am only beginning to understand. That worry is pure, selfless love.</div>
+        </div>
+      </div>
+      <div class="reason-card" id="rc3">
+        <div class="reason-icon" style="animation-delay:.8s">🤍</div>
+        <div>
+          <span class="reason-num">03</span>
+          <div class="reason-title">You give without asking anything back</div>
+          <div class="reason-body">Every sacrifice you've made — big or small — you did quietly, without keeping score. That means everything to me.</div>
+        </div>
+      </div>
+      <div class="reason-card" id="rc4">
+        <div class="reason-icon" style="animation-delay:1.2s">⭐</div>
+        <div>
+          <span class="reason-num">04</span>
+          <div class="reason-title">You believe in me, always</div>
+          <div class="reason-body">Even when I doubt myself completely, you never do. You hold faith in me that I am still learning to hold for myself.</div>
+        </div>
+      </div>
+      <div class="reason-card" id="rc5">
+        <div class="reason-icon" style="animation-delay:1.6s">🌸</div>
+        <div>
+          <span class="reason-num">05</span>
+          <div class="reason-title">Because you are my mom</div>
+          <div class="reason-body">And that alone means everything. I could list a thousand reasons, but in the end — it all comes back to this.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ GALLERY ══════════════ -->
+<section id="gallery">
+  <div class="section-wrap">
+    <div class="floral-divider">🌷 ✿ 🌸 ✿ 🌷</div>
+    <div style="height:40px"></div>
+    <div class="gallery-intro fade-up" id="gi">
+      <p class="section-eyebrow" style="opacity:1">our memories together</p>
+      <h2 class="section-title" style="opacity:1;margin-bottom:0">Moments I treasure 📷</h2>
+    </div>
+    <div style="height:32px"></div>
+    <div class="photo-grid">
+      <div class="photo-frame" id="pf1">
+        <div class="photo-inner">
+          <div class="photo-placeholder">🌸</div>
+          <div class="photo-placeholder-text">Add your favourite photo together here<br><span style="font-size:11px;opacity:.6">&lt;img src="photo.jpg"&gt;</span></div>
+        </div>
+        <div class="photo-label">Our favourite day 💕</div>
+      </div>
+      <div class="photo-frame" id="pf2" style="aspect-ratio:3/4">
+        <div class="photo-inner" style="aspect-ratio:3/4">
+          <div class="photo-placeholder">🌼</div>
+          <div class="photo-placeholder-text">Add a photo here</div>
+        </div>
+        <div class="photo-label">Always smiling ✨</div>
+      </div>
+      <div class="photo-frame" id="pf3" style="aspect-ratio:3/4">
+        <div class="photo-inner" style="aspect-ratio:3/4">
+          <div class="photo-placeholder">🌷</div>
+          <div class="photo-placeholder-text">Your photo here</div>
+        </div>
+        <div class="photo-label">My hero 🌹</div>
+      </div>
+      <div class="photo-frame" id="pf4">
+        <div class="photo-inner">
+          <div class="photo-placeholder">💕</div>
+          <div class="photo-placeholder-text">Replace with your photo</div>
+        </div>
+        <div class="photo-label">Us forever 🌸</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SONG SECTION -->
+<section id="song">
+  <div class="section-wrap">
+    <div class="floral-divider">✿ 🎵 ✿</div>
+    <div style="height:40px"></div>
+    <div class="song-card fade-up" id="songCard">
+      <div class="song-top">
+        <span class="song-note">🎵</span>
+        <div>
+          <div class="song-label">a song dedicated to you</div>
+          <div class="song-sub">because you always sing it to me 🌸</div>
+        </div>
+        <span class="song-note">🎵</span>
+      </div>
+      <div class="song-embed">
+        <iframe
+          src="https://www.youtube.com/embed/t7J87fhD5wg?rel=0&modestbranding=1&color=white"
+          title="A song for mom"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="width:100%;aspect-ratio:16/9;border-radius:14px;display:block">
+        </iframe>
+      </div>
+      <div class="song-footer">every time I hear this, I think of you 💕</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ENDING ══════════════ -->
+<section id="ending">
+  <div class="ending-wrap">
+    <span class="ending-flowers">🌸🌹🌷🌼🌺</span>
+    <div class="ending-main" id="em">
+      Happy Mother's Day
+      <span>I love you so much ❤</span>
+    </div>
+    <div class="ending-sub" id="es">
+      Thank you for being the warmest, softest, most wonderful person in my life. I'm so lucky you're my mom.
+    </div>
+    <div class="ending-love" id="el">— made with all my love, your son 🌹</div>
+    <span class="ending-hearts" id="eh">🌸 💕 🌸</span>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* LOADER */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    gsap.to('#loader',{opacity:0,duration:.9,ease:'power2.inOut',onComplete:()=>{
+      document.getElementById('loader').style.display='none';
+      revealHero();
+    }});
+  },1600);
+});
+
+function revealHero(){
+  const tl=gsap.timeline();
+  tl.to('.hero-tag',{opacity:1,y:0,duration:.8,ease:'power2.out'})
+    .to('.hero-title',{opacity:1,y:0,duration:.9,ease:'power2.out'},'-=.3')
+    .to('#hdiv',{width:'180px',opacity:1,duration:.8,ease:'power2.out'},'-=.2')
+    .to('.hero-sub',{opacity:.8,y:0,duration:.7,ease:'power2.out'},'-=.3')
+    .to('.scroll-hint',{opacity:1,duration:.6},'-=.1');
+}
+
+/* HERO elements start */
+gsap.set(['.hero-tag','.hero-title','.hero-sub'],{opacity:0,y:20});
+gsap.set('#hdiv',{width:0,opacity:0});
+gsap.set('.scroll-hint',{opacity:0});
+
+/* SCROLL TRIGGERS */
+function reveal(el,extra={}){
+  ScrollTrigger.create({trigger:el,start:'top 82%',
+    onEnter:()=>gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power3.out',...extra})});
+}
+
+reveal('#letterCard');
+reveal('#re');
+reveal('#rt');
+['#rc1','#rc2','#rc3','#rc4','#rc5'].forEach((id,i)=>reveal(id,{delay:i*.1}));
+reveal('#gi');
+['#pf1','#pf2','#pf3','#pf4'].forEach((id,i)=>{
+  ScrollTrigger.create({trigger:id,start:'top 86%',
+    onEnter:()=>gsap.to(id,{opacity:1,scale:1,duration:.7,delay:i*.1,ease:'back.out(1.3)'})});
+});
+reveal('#songCard');
+ScrollTrigger.create({trigger:'#em',start:'top 76%',onEnter:()=>{
+  gsap.to('#em',{opacity:1,y:0,duration:1,ease:'power3.out'});
+  gsap.to('#es',{opacity:1,duration:.9,delay:.3});
+  gsap.to('#el',{opacity:1,duration:.8,delay:.6});
+  gsap.to('#eh',{opacity:1,duration:.6,delay:.9});
+  spawnPetals();
+}});
+
+/* PETALS */
+const em=['🌸','🌷','🌼','🌺','💕'];
+function spawnPetals(){
+  setInterval(()=>{
+    const p=document.createElement('div');
+    p.className='petal';
+    p.textContent=em[Math.floor(Math.random()*em.length)];
+    p.style.left=Math.random()*100+'vw';
+    p.style.top='-30px';
+    p.style.fontSize=(12+Math.random()*14)+'px';
+    document.body.appendChild(p);
+    gsap.to(p,{
+      opacity:Math.random()*.7+.2,
+      y:window.innerHeight+40,
+      x:(Math.random()-.5)*80,
+      rotation:Math.random()*360,
+      duration:4+Math.random()*4,
+      ease:'none',
+      onComplete:()=>p.remove()
+    });
+  },700);
+}
+
+/* gentle parallax on blobs */
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  document.querySelectorAll('.blob').forEach((b,i)=>{
+    b.style.transform=`translateY(${y*(i===0?.08:i===1?.05:.12)}px)`;
+  });
+},{passive:true});
+</script>
+</body>
+</html>
